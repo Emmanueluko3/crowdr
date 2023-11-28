@@ -12,7 +12,7 @@ const Button: React.FC<ButtonProps> = ({
   ...rest
 }) => {
   const defaultClassName =
-    "rounded-lg flex items-center justify-center hover:opacity-80 text-white w-full font-bold py-3 px-6 bg-customBlue";
+    "rounded-lg flex items-center justify-center hover:opacity-80 w-full font-bold py-3 px-6 bg-customBlue";
   const finalClassName = className
     ? `${defaultClassName} ${className}`
     : defaultClassName;
