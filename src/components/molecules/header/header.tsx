@@ -1,8 +1,10 @@
 "use client";
 import Button from "@/components/atoms/button";
+import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useState } from "react";
+import ProfilePics from "@/../public/images/profilePics.png";
 
 const plusIcon = (
   <svg
@@ -54,6 +56,14 @@ export default function Header() {
           <span className="mr-3">{plusIcon}</span> Create Campaign
         </Button>
         <Button className="bg-gradient-to-b from-[#17191F] to-[#0F1115] text-base whitespace-nowrap">
+          <Image
+            src={ProfilePics}
+            width={500}
+            height={500}
+            alt="Solar Panel"
+            loading="lazy"
+            className="w-6 h-6 rounded-full mr-4"
+          />
           Divine Samuel
         </Button>
       </div>
