@@ -2,6 +2,7 @@ import Card from "@/components/molecules/cards/card";
 import Header from "@/components/molecules/header/header";
 import SolarPanel from "@/../public/images/auth-bg.png";
 import React from "react";
+import Footer from "@/components/molecules/footer/footer";
 
 const trending = [
   {
@@ -211,6 +212,7 @@ export default function Dashboard() {
           ))}
         </div>
       </div>
+      <Footer />
     </div>
   );
 }

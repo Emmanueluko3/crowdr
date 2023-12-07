@@ -1,4 +1,4 @@
-import Lottie from "@/components/atoms/lottie";
+// import Lottie from "@/components/atoms/lottie";
 import React, { ReactNode } from "react";
 import Modal from "./modal";
 
@@ -39,9 +39,7 @@ const ModalComponent: React.FC<ModalComponentProps> = ({
             />
           </svg>
         </button>
-        <div className="flex w-36 h-36">
-          <Lottie lottie={lottie} />
-        </div>
+        <div className="flex w-36 h-36">{/* <Lottie lottie={lottie} /> */}</div>
         <p className="lg:text-lg text-base text-gray-950 font-bold   mb-3">
           {title}
         </p>

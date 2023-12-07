@@ -4,6 +4,10 @@ import Image from "next/image";
 import SolarPanel from "@/../public/images/auth-bg.png";
 import Header from "@/components/molecules/header/header";
 import ProfilePics from "@/../public/images/profilePics.png";
+import Button from "@/components/atoms/button";
+import Footer from "@/components/molecules/footer/footer";
+import Modal from "@/components/molecules/Modals/modal";
+import { useState } from "react";
 
 const descriptions = [
   {
@@ -28,9 +32,17 @@ const descriptions = [
   },
 ];
 export default function Campaign() {
+  const [modalState, setModalState] = useState(false);
   return (
     <div>
       <Header />
+      {modalState && (
+        <Modal onClose={() => setModalState(true)}>
+          <div>
+            <p>stuff</p>
+          </div>
+        </Modal>
+      )}
       <div className="py-14 px-16">
         <div className="w-full h-80 py-10">
           <Image
@@ -47,7 +59,7 @@ export default function Campaign() {
             <h2 className="mb-4">
               Empowering Communities: Solar-Powered Microgrid Initiative
             </h2>
-            <span className="text-customBlue border border-customBlue bg-gradient-to-b from-[#17191F] to-[#0F1115] rounded-full px-4 py-2 whitespace-nowrap text-base ">
+            <span className="text-customBlue bg-gradient-to-b from-[#17191F] to-[#0F1115] rounded-full px-4 py-2 whitespace-nowrap text-base ">
               Renewable Energy
             </span>
 
@@ -57,6 +69,12 @@ export default function Campaign() {
                 <p className="mb-6 text-gray-200 text-base">{item.subtile}</p>
               </div>
             ))}
+            <Button
+              onClick={() => setModalState(true)}
+              className=" text-gray-950"
+            >
+              Make a donation
+            </Button>
           </div>
           <div className=" col-span-4 flex items-center justify-center flex-col bg-gradient-to-b from-[#17191F] to-[#0F1115] p-6 rounded-2xl h-fit">
             <Image
@@ -80,6 +98,7 @@ export default function Campaign() {
           </div>
         </div>
       </div>
+      <Footer />
     </div>
   );
 }
