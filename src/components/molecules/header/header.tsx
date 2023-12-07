@@ -26,7 +26,6 @@ export default function Header() {
   const navLinks = [
     { label: "Dashboard", href: "/dashboard" },
     { label: "My Contributions", href: "/contributions" },
-    { label: "Navigation", href: "/navigation" },
   ];
 
   return (
