@@ -1,4 +1,4 @@
-'use client'
+"use client";
 
 import Card from "@/components/molecules/cards/card";
 import Header from "@/components/molecules/header/header";
@@ -107,26 +107,25 @@ export default function Dashboard() {
     "Animal Welfare",
   ];
 
-  // const { provider } = useMagicContext()
+  const { provider } = useMagicContext();
 
-  const [account, setAccount] = useState<string>('')
-  const [campaigns, setCampaigns] = useState([])
+  const [account, setAccount] = useState<string>("");
+  const [campaigns, setCampaigns] = useState([]);
 
   const getCreatorCampaignsHandler = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    const res = await getMyCampaigns(provider, account)
-    setCampaigns(res)
-  }
+    // const provider = new ethers.providers.Web3Provider(window.ethereum)
+    const res = await getMyCampaigns(provider, account);
+    setCampaigns(res);
+  };
 
   useEffect(() => {
-    const user = localStorage.getItem('user')
-    setAccount(user)
-  }, [account])
-
+    const user = localStorage.getItem("user");
+    setAccount(user);
+  }, [account]);
 
   useEffect(() => {
-    getCreatorCampaignsHandler()
-  }, [account])
+    getCreatorCampaignsHandler();
+  }, [account]);
 
   return (
     <div className=" bg-auth-bg">
@@ -135,21 +134,22 @@ export default function Dashboard() {
       <div className="py-14 px-16">
         <h2 className="text-white font-bold text-3xl">Trending Now</h2>
         <div className="my-10 grid grid-flow-row grid-cols-3 gap-6">
-          {campaigns && campaigns.map((item, index) => (
-            <Card
-              key={index}
-              image={SolarPanel}
-              category={'Renewable'}
-              daysLeft={4}
-              title={item.title}
-              subtitle={'Great Project that has the pontentail to disrupt'}
-              creatorPicture={SolarPanel}
-              creator={'Divine Samuel'}
-              raised={item.totalFunds}
-              supporters={item.supporters}
-              goal={item.goal}
-            />
-          ))}
+          {campaigns &&
+            campaigns.map((item, index) => (
+              <Card
+                key={index}
+                image={SolarPanel}
+                category={"Renewable"}
+                daysLeft={4}
+                title={item.title}
+                subtitle={"Great Project that has the pontentail to disrupt"}
+                creatorPicture={SolarPanel}
+                creator={"Divine Samuel"}
+                raised={item.totalFunds}
+                supporters={item.supporters}
+                goal={item.goal}
+              />
+            ))}
         </div>
       </div>
 
@@ -187,7 +187,7 @@ export default function Dashboard() {
               title={item.title}
               subtitle={item.subtitle}
               creatorPicture={item.creatorPicture}
-              creator={'Divine Samuel'}
+              creator={"Divine Samuel"}
               raised={item.raised}
               supporters={item.supporters}
               goal={item.goal}
