@@ -71,29 +71,6 @@ export const createCampaign = async (
   }
 }
 
-export const createEvent = async (
-  provider: ethers.Signer | ethers.providers.Provider | undefined,
-  title: string,
-  eventTimestamp: number | undefined,
-  deposit: string,
-  maxCapacity: number,
-  imagePath: string,
-  phone: string
-  ) => {
-  
-  const contract = await contractInstance(provider)
-  const tx = await contract.createCampaign(
-    2000,
-    eventTimestamp,
-    1,
-    1
-  )
-  if (tx) {
-    const result = await tx.wait()
-    return result
-  }
-}
-
 export const getCreatorCampaigns = async (
   provider: ethers.Signer | ethers.providers.Provider | undefined,
   addr: any
@@ -107,19 +84,6 @@ export const getCreatorCampaigns = async (
   }
 }
 
-export const confirmAllAttendees = async (
-  provider: ethers.Signer | ethers.providers.Provider | undefined
-  ) => {
-  const contract = await contractInstance(provider)
-  try {
-    const tx = await contract.confirmAllAttendees()
-    if (tx) {
-      return await tx.wait()  
-    }
-  } catch (error) {
-    console.log(error)
-  }
-}
 
 export const getContractBalance = async (
   provider: ethers.Signer | ethers.providers.Provider | undefined
