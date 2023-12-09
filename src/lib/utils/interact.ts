@@ -5,7 +5,7 @@ import Crowdr from '../../../Crowdr.json'
 
 const contractABI = Crowdr.abi
 
-const contractAddress = '0x73599C3d56fF856D3A3Ee9cdB82C9866C3247AE4'
+const contractAddress = '0xCD160c00Ae03c536736F769a87cccf1A0a82c55B'
 
 export const contractInstance = (provider: ethers.Signer | ethers.providers.Provider | undefined) => {
   return new ethers.Contract(contractAddress, contractABI, provider)
@@ -50,14 +50,14 @@ export const getMyCampaigns = async (provider: ethers.Signer | ethers.providers.
 }
 
 export const createCampaign = async (
-  provider: ethers.Signer | ethers.providers.Provider | undefined,
+  provider
+  // provider: ethers.Signer | ethers.providers.Provider | undefined,
  
   ) => {
  
   const contract = await contractInstance(provider)
-  
   const tx = await contract.createCampaign(
-    'title',
+    'hello',
     'desc',
     2000,
     88990007655,
@@ -77,17 +77,14 @@ export const getCreatorCampaigns = async (
   ) => {
   const contract = await contractInstance(provider)
 
-  const tx = await contract.getCreatorCampaigns(addr)
-  return tx
-  if (tx) {
-    return await tx.wait()
-  }
+  return await contract.getCreatorCampaigns(addr)
+
 }
 
 
-export const getContractBalance = async (
+export const getAllCategories = async (
   provider: ethers.Signer | ethers.providers.Provider | undefined
   ) => {
   const contract = await contractInstance(provider)
-  return await contract.getContractBalance()
+  return await contract.getAllCategories()
 }

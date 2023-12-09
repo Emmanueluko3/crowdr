@@ -32,30 +32,31 @@ export default function Header() {
     { label: "Navigation", href: "/navigation" },
   ];
 
-  const { magic, provider } = useMagicContext()
+  const { magic } = useMagicContext()
 
-  const [disabled, setDisabled] = useState<boolean>(false)
   const [account, setAccount] = useState<string | null>(null)
 
   const connect = useCallback(async () => {
     if (!magic) return;
     try {
-      setDisabled(true);
+   
       const accounts = await magic?.wallet.connectWithUI();
-      setDisabled(false);
-      console.log('Logged in user:', accounts[0]);
+
       localStorage.setItem('user', accounts[0]);
       setAccount(accounts[0]);
     } catch (error) {
-      setDisabled(false);
+
       console.error(error);
     }
   }, [magic, setAccount]);
 
+
+
+
   const create = async () => {
-    const provider = new ethers.providers.Web3Provider(window.ethereum)
-    console.log(provider.getSigner())
-    await createCampaign(provider.getSigner())
+    const provider = await magic?.wallet.getProvider();
+    const web3Provider = new ethers.providers.Web3Provider(provider);
+    await createCampaign(web3Provider.getSigner())
   }
 
   return (
