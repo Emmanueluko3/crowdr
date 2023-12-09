@@ -1,32 +1,35 @@
+import { ethers } from "ethers";
+import Crowdr from "../../../Crowdr.json";
 
-import { ethers } from 'ethers'
-import Crowdr from '../../../Crowdr.json'
-
-
-const contractABI = Crowdr.abi
+const contractABI = Crowdr.abi;
 
 const contractAddress = '0xCD160c00Ae03c536736F769a87cccf1A0a82c55B'
 
-export const contractInstance = (provider: ethers.Signer | ethers.providers.Provider | undefined) => {
-  return new ethers.Contract(contractAddress, contractABI, provider)
-}
+export const contractInstance = (
+  provider: ethers.Signer | ethers.providers.Provider | undefined
+) => {
+  return new ethers.Contract(contractAddress, contractABI, provider);
+};
 
-export const getMyCampaigns = async (provider: ethers.Signer | ethers.providers.Provider | undefined, creatorAddr: string) => {
+export const getMyCampaigns = async (
+  provider: ethers.Signer | ethers.providers.Provider | undefined,
+  creatorAddr: string
+) => {
   try {
-    const contract = await contractInstance(provider)
+    const contract = await contractInstance(provider);
 
-    let campaignIndexes = await contract.getCreatorCampaigns(creatorAddr)
+    let campaignIndexes = await contract.getCreatorCampaigns(creatorAddr);
 
-    if (!(campaignIndexes)) return []
+    if (!campaignIndexes) return [];
 
     campaignIndexes = campaignIndexes.map((item: number) => Number(item));
 
-    let campaigns = []
+    let campaigns = [];
 
     for (let i = 0; i < campaignIndexes.length; i++) {
-      const data = await contract.getCampaignDetails(campaignIndexes[i])
-    
-      console.log(data)
+      const data = await contract.getCampaignDetails(campaignIndexes[i]);
+
+      console.log(data);
 
       const campaign = {
         id: i,
@@ -38,20 +41,18 @@ export const getMyCampaigns = async (provider: ethers.Signer | ethers.providers.
         totalFunds: Number(data[5]),
         category: data[6],
         isOpen: data[7],
-      }
-      campaigns.push(campaign)
+      };
+      campaigns.push(campaign);
     }
 
-    return campaigns
-
+    return campaigns;
   } catch (e) {
-    console.log(e)
+    console.log(e);
   }
-}
+};
 
 export const createCampaign = async (
-  provider
-  // provider: ethers.Signer | ethers.providers.Provider | undefined,
+  provider: ethers.Signer | ethers.providers.Provider | undefined
  
   ) => {
  
@@ -63,20 +64,14 @@ export const createCampaign = async (
     88990007655,
     1,
     1
-  )
-  alert(tx)
-  if (tx) {
-    const result = await tx.wait()
-    return result
-  }
-}
+  );
+};
 
 export const getCreatorCampaigns = async (
   provider: ethers.Signer | ethers.providers.Provider | undefined,
   addr: any
-  ) => {
-  const contract = await contractInstance(provider)
-
+) => {
+  const contract = await contractInstance(provider);
   return await contract.getCreatorCampaigns(addr)
 
 }
