@@ -95,37 +95,25 @@ const searchIcon = (
   </svg>
 );
 export default function Dashboard() {
-  // const categories = [
-  //   "All Campaigns",
-  //   "Creative Projects",
-  //   "Technology and Innovation",
-  //   "Food and Agriculture",
-  //   "Product Development",
-  //   "Social Causes",
-  //   "Event Funding",
-  //   "Renewable Energy",
-  //   "Animal Welfare",
-  // ];
+  const { magic } = useMagicContext();
 
-  const { magic } = useMagicContext()
-
-  const [account, setAccount] = useState<string>('')
-  const [campaigns, setCampaigns] = useState([])
-  const [categories, setCategories] = useState([])
+  const [account, setAccount] = useState<string>("");
+  const [campaigns, setCampaigns] = useState([]);
+  const [categories, setCategories] = useState([]);
 
   const getCreatorCampaignsHandler = async () => {
-   const provider = await magic?.wallet.getProvider();
+    const provider = await magic?.wallet.getProvider();
     const web3Provider = new ethers.providers.Web3Provider(provider);
-    const res = await getMyCampaigns(web3Provider, account)
-    setCampaigns(res)
-  }
+    const res = await getMyCampaigns(web3Provider, account);
+    setCampaigns(res);
+  };
 
   const getAllCategoriesHandler = async () => {
     const provider = await magic?.wallet.getProvider();
     const web3Provider = new ethers.providers.Web3Provider(provider);
-    const res = await getAllCategories(web3Provider)
-    setCategories(res)
-  }
+    const res = await getAllCategories(web3Provider);
+    setCategories(res);
+  };
 
   useEffect(() => {
     const user = localStorage.getItem("user");
@@ -133,12 +121,12 @@ export default function Dashboard() {
   }, [account]);
 
   useEffect(() => {
-    getCreatorCampaignsHandler()
-  }, [magic])
+    getCreatorCampaignsHandler();
+  }, [magic]);
 
   useEffect(() => {
-    getAllCategoriesHandler()
-  }, [magic])
+    getAllCategoriesHandler();
+  }, [magic]);
 
   return (
     <div className=" bg-auth-bg">
@@ -181,14 +169,21 @@ export default function Dashboard() {
           </div>
         </div>
         <div className="flex items-center gap-4 flex-wrap">
-          {categories && categories.map((item, index) => (
-            <button
-              key={index}
-              className=" text-gray-300 border border-gray-300 rounded-full px-4 py-2 whitespace-nowrap text-base"
-            >
-              {item}
-            </button>
-          ))}
+          {categories &&
+            categories.map((item: any, index) => (
+              <button
+                key={index}
+                className=" text-gray-300 border border-gray-300 rounded-full px-4 py-2 whitespace-nowrap text-base"
+              >
+                {item
+                  .split("_")
+                  .map(
+                    (word: any) =>
+                      word[0].toUpperCase() + word.slice(1).toLowerCase()
+                  )
+                  .join(" ")}
+              </button>
+            ))}
         </div>
         <div className="my-10 grid grid-flow-row grid-cols-3 gap-6">
           {categoriesData.map((item, index) => (
