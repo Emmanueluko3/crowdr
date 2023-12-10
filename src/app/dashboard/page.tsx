@@ -107,12 +107,18 @@ export default function Dashboard() {
         </div>
         <div className="flex items-center gap-4 flex-wrap">
           {categories &&
-            categories.map((item, index) => (
+            categories.map((item: any, index) => (
               <button
                 key={index}
                 className=" text-gray-300 border border-gray-300 rounded-full px-4 py-2 whitespace-nowrap text-base"
               >
-                {item}
+                {item
+                  .split("_")
+                  .map(
+                    (word: any) =>
+                      word[0].toUpperCase() + word.slice(1).toLowerCase()
+                  )
+                  .join(" ")}
               </button>
             ))}
         </div>
