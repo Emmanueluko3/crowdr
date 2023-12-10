@@ -3,8 +3,11 @@ import Button from "@/components/atoms/button";
 import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
-import React, { useState } from "react";
+import React, { useCallback, useState } from "react";
 import ProfilePics from "@/../public/images/profilePics.png";
+import { useMagicContext } from "@/components/magic/MagicProvider";
+import { createCampaign } from "@/lib/utils";
+import { ethers } from "ethers";
 
 const plusIcon = (
   <svg
@@ -27,6 +30,32 @@ export default function Header() {
     { label: "Dashboard", href: "/dashboard" },
     { label: "My Contributions", href: "/contributions" },
   ];
+
+  const { magic, provider } = useMagicContext()
+
+  const [disabled, setDisabled] = useState<boolean>(false)
+  const [account, setAccount] = useState<string | null>(null)
+
+  const connect = useCallback(async () => {
+    if (!magic) return;
+    try {
+      setDisabled(true);
+      const accounts = await magic?.wallet.connectWithUI();
+      setDisabled(false);
+      console.log('Logged in user:', accounts[0]);
+      localStorage.setItem('user', accounts[0]);
+      setAccount(accounts[0]);
+    } catch (error) {
+      setDisabled(false);
+      console.error(error);
+    }
+  }, [magic, setAccount]);
+
+  const create = async () => {
+    const provider = new ethers.providers.Web3Provider(window.ethereum)
+    console.log(provider.getSigner())
+    await createCampaign(provider.getSigner())
+  }
 
   return (
     <div className="w-full bg-customBlack flex justify-between items-center p-8 px-16">
@@ -51,10 +80,10 @@ export default function Header() {
         </div>
       </div>
       <div className="flex gap-3">
-        <Button className="text-black flex text-base whitespace-nowrap">
+        <Button onClick={create} className="text-black flex text-base whitespace-nowrap">
           <span className="mr-3">{plusIcon}</span> Create Campaign
         </Button>
-        <Button className="bg-gradient-to-b from-[#17191F] to-[#0F1115] text-base whitespace-nowrap">
+        <Button onClick={connect} className="bg-gradient-to-b from-[#17191F] to-[#0F1115] text-base whitespace-nowrap">
           <Image
             src={ProfilePics}
             width={500}
