@@ -13,6 +13,10 @@ import {
 } from "@/lib/utils";
 import { ethers } from "ethers";
 import Footer from "@/components/molecules/footer/footer";
+import Modal from "@/components/molecules/Modals/modal";
+import InputGroup from "@/components/molecules/inputGroup/inputGroup";
+import SelectGroup from "@/components/molecules/inputGroup/selectGroup";
+import Button from "@/components/atoms/button";
 
 const searchIcon = (
   <svg
@@ -37,6 +41,10 @@ export default function Dashboard() {
   const [account, setAccount] = useState<string>("");
   const [campaigns, setCampaigns] = useState([]);
   const [categories, setCategories] = useState([]);
+  const [createCampaignModal, setCreateCampaignModal] = useState(false);
+
+  // Create Form Data
+  const [category, setCategory] = useState<any>(null);
 
   const getCreatorCampaignsHandler = async () => {
     const provider = await magic?.wallet.getProvider();
@@ -68,6 +76,61 @@ export default function Dashboard() {
   return (
     <div className=" bg-auth-bg">
       <Header />
+      <Button onClick={() => setCreateCampaignModal(true)}>Create</Button>
+
+      {/* Create campaign */}
+      {createCampaignModal && (
+        <Modal onClose={() => setCreateCampaignModal(false)}>
+          <div className="w-full flex justify-center items-center flex-col">
+            <h2 className="font-bold text-3xl m-8">Create a new campaign</h2>
+
+            <div className="border border-customBlue rounded-lg p-4 w-[60vw]">
+              <h3 className="text-xl font-bold mb-4">Introduction</h3>
+              <div className="mb-4">
+                <InputGroup
+                  label="Campaign Title"
+                  placeholder="Enter campaign title"
+                />
+              </div>
+              <div className="mb-4">
+                <SelectGroup
+                  label="Category"
+                  onChange={(e) => setCategory(e.target.value)}
+                  value={category}
+                  placeholder="Select Campaign Category"
+                  options={[
+                    { label: "Creative Projects", value: 0 },
+                    { label: "Technology and Innovation", value: 1 },
+                    { label: "Food and Agriculture", value: 2 },
+                    { label: "Social Causes", value: 3 },
+                    { label: "Event Funding", value: 4 },
+                    { label: "REFI", value: 5 },
+                    { label: "Renewable Energy", value: 6 },
+                    { label: "Animal Welfare", value: 7 },
+                  ]}
+                />
+              </div>
+              <div className="mb-4">
+                <InputGroup
+                  label="Project Overview"
+                  placeholder="Write something"
+                />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Tell Your Story</h3>
+              <div className="mb-4">
+                <InputGroup label="Background" placeholder="write something" />
+              </div>
+
+              <div className="mb-4">
+                <InputGroup
+                  label="Personal Connection"
+                  placeholder="Write something"
+                />
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
       {/* Trendings */}
       <div className="py-14 px-16">
         <h2 className="text-white font-bold text-3xl">Trending Now</h2>

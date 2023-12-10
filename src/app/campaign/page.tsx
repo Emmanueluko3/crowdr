@@ -37,7 +37,7 @@ export default function Campaign() {
     <div>
       <Header />
       {modalState && (
-        <Modal onClose={() => setModalState(true)}>
+        <Modal onClose={() => setModalState(false)}>
           <div>
             <p>stuff</p>
           </div>
