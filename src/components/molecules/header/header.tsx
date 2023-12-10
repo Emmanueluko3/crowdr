@@ -30,7 +30,7 @@ const plusIcon = (
 export default function Header() {
   const pathname = usePathname().split("/")[1];
   const navLinks = [
-    { label: "Dashboard", href: "/dashboard" },
+    { label: "Dashboard", href: "/" },
     { label: "My Contributions", href: "/contributions" },
   ];
 
@@ -130,6 +130,8 @@ export default function Header() {
                   placeholder="Write something"
                 />
               </div>
+
+              <Button className="text-gray-950">Continue</Button>
             </div>
           </div>
         </Modal>
