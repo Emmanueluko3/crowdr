@@ -8,6 +8,9 @@ import ProfilePics from "@/../public/images/profilePics.png";
 import { useMagicContext } from "@/components/magic/MagicProvider";
 import { createCampaign, truncate } from "@/lib/utils";
 import { ethers } from "ethers";
+import SelectGroup from "../inputGroup/selectGroup";
+import InputGroup from "../inputGroup/inputGroup";
+import Modal from "../Modals/modal";
 
 const plusIcon = (
   <svg
@@ -31,40 +34,39 @@ export default function Header() {
     { label: "My Contributions", href: "/contributions" },
   ];
 
-  const { magic } = useMagicContext()
+  const { magic } = useMagicContext();
 
   const [disabled, setDisabled] = useState<boolean>(false);
   const [account, setAccount] = useState<any>("");
   const [logoutBtn, setLogoutBtn] = useState(false);
 
+  const [createCampaignModal, setCreateCampaignModal] = useState(false);
+  // Create Form Data
+  const [category, setCategory] = useState<any>(null);
+
   const connect = useCallback(async () => {
     if (!magic) return;
     try {
-   
       const accounts = await magic?.wallet.connectWithUI();
 
-      localStorage.setItem('user', accounts[0]);
+      localStorage.setItem("user", accounts[0]);
       setAccount(accounts[0]);
     } catch (error) {
-
       console.error(error);
     }
   }, [magic, setAccount]);
 
-
-
-
   const create = async () => {
     const provider = await magic?.wallet.getProvider();
     const web3Provider = new ethers.providers.Web3Provider(provider);
-  if (account) {
-      await createCampaign(web3Provider.getSigner());
+    if (account) {
+      // await createCampaign(web3Provider.getSigner());
+      setCreateCampaignModal(true);
     } else {
       await connect();
       account && (await createCampaign(web3Provider.getSigner()));
     }
-  }
- 
+  };
 
   const logout = async () => {
     await magic?.wallet.disconnect();
@@ -79,6 +81,59 @@ export default function Header() {
 
   return (
     <div className="w-full bg-customBlack flex justify-between items-center p-8 px-16">
+      {/* Create campaign */}
+      {createCampaignModal && (
+        <Modal onClose={() => setCreateCampaignModal(false)}>
+          <div className="w-full flex justify-center items-center flex-col">
+            <h2 className="font-bold text-3xl m-8">Create a new campaign</h2>
+
+            <div className="border border-customBlue rounded-lg p-4 w-[60vw] bg-customBlack">
+              <h3 className="text-xl font-bold mb-4">Introduction</h3>
+              <div className="mb-4">
+                <InputGroup
+                  label="Campaign Title"
+                  placeholder="Enter campaign title"
+                />
+              </div>
+              <div className="mb-4">
+                <SelectGroup
+                  label="Category"
+                  onChange={(e) => setCategory(e.target.value)}
+                  value={category}
+                  placeholder="Select Campaign Category"
+                  options={[
+                    { label: "Creative Projects", value: 0 },
+                    { label: "Technology and Innovation", value: 1 },
+                    { label: "Food and Agriculture", value: 2 },
+                    { label: "Social Causes", value: 3 },
+                    { label: "Event Funding", value: 4 },
+                    { label: "REFI", value: 5 },
+                    { label: "Renewable Energy", value: 6 },
+                    { label: "Animal Welfare", value: 7 },
+                  ]}
+                />
+              </div>
+              <div className="mb-4">
+                <InputGroup
+                  label="Project Overview"
+                  placeholder="Write something"
+                />
+              </div>
+              <h3 className="text-xl font-bold mb-4">Tell Your Story</h3>
+              <div className="mb-4">
+                <InputGroup label="Background" placeholder="write something" />
+              </div>
+
+              <div className="mb-4">
+                <InputGroup
+                  label="Personal Connection"
+                  placeholder="Write something"
+                />
+              </div>
+            </div>
+          </div>
+        </Modal>
+      )}
       <div className="flex items-center">
         <Link href="/" className="text-white text-3xl font-bold mr-8">
           Crowdr

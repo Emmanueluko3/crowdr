@@ -26,18 +26,13 @@ export default function Footer() {
 
   return (
     <div className="w-full bg-customBlack flex justify-between items-center p-8 px-16">
-      <div className="flex items-center">
+      <div className="flex items-center justify-between w-full">
         <Link href="/" className="text-white text-3xl font-bold mr-8">
           Crowdr
         </Link>
         <p className="text-gray-500">
           Copyright @ {currentYear} StrategyConnect Inc. All Rights Reserved.
         </p>
-      </div>
-      <div className="flex gap-3">
-        <Button className="text-black flex text-base whitespace-nowrap">
-          <span className="mr-3">{plusIcon}</span> Create Campaign
-        </Button>
       </div>
     </div>
   );

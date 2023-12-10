@@ -8,7 +8,6 @@ import { useMagicContext } from "@/components/magic/MagicProvider";
 import { IDToCategory, getMyCampaigns } from "@/lib/utils";
 import { ethers } from "ethers";
 
-
 const searchIcon = (
   <svg
     xmlns="http://www.w3.org/2000/svg"
@@ -27,27 +26,23 @@ const searchIcon = (
   </svg>
 );
 export default function Contributions() {
+  const { magic } = useMagicContext();
 
-  const { magic } = useMagicContext()
-
-  const [account, setAccount] = useState<string | null>('')
-  const [campaigns, setCampaigns] = useState([])
-
-  const getCreatorCampaignsHandler = async () => {
-   const provider = await magic?.wallet.getProvider();
-    const web3Provider = new ethers.providers.Web3Provider(provider);
-    const res = await getMyCampaigns(web3Provider, account)
-    setCampaigns(res)
-  }
+  const [account, setAccount] = useState<string>("");
+  const [campaigns, setCampaigns] = useState<any>([]);
 
   useEffect(() => {
-    const user = localStorage.getItem("user");
+    const user: any = localStorage.getItem("user");
     setAccount(user);
-  }, [account]);
 
-  useEffect(() => {
-    getCreatorCampaignsHandler()
-  }, [magic, account])
+    const getCreatorCampaignsHandler = async () => {
+      const provider = await magic?.wallet.getProvider();
+      const web3Provider = new ethers.providers.Web3Provider(provider);
+      const res = await getMyCampaigns(web3Provider, account);
+      setCampaigns(res);
+    };
+    getCreatorCampaignsHandler();
+  }, [magic, account]);
 
   return (
     <div className=" bg-auth-bg">
@@ -56,7 +51,7 @@ export default function Contributions() {
         <h2 className="text-white font-bold text-3xl">My Contributions</h2>
         <div className="my-10 grid grid-flow-row grid-cols-3 gap-6">
           {campaigns &&
-            campaigns.map((item, index) => (
+            campaigns.map((item: any, index: number) => (
               <Card
                 key={index}
                 image={SolarPanel}
@@ -73,7 +68,6 @@ export default function Contributions() {
             ))}
         </div>
       </div>
-
     </div>
   );
 }

@@ -5,7 +5,7 @@ import ProgressBar from "@/components/atoms/progressBar";
 
 interface CardProps {
   image: any;
-  category: string;
+  category: string | undefined;
   daysLeft: string | number;
   title: string;
   subtitle: string;
