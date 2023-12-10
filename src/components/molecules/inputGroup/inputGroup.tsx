@@ -10,10 +10,10 @@ interface InputGroupProps extends InputProps {
 const InputGroup: React.FC<InputGroupProps> = ({ label, ...rest }) => {
   return (
     <div>
-      <p className="text-base text-gray-950 mb-1">{label}</p>
+      <p className="text-base mb-2">{label}</p>
       <Input
         {...rest}
-        className="border w-full border-gray-300 text-customGray1 bg-[#F9F9FB] rounded-lg py-[5px] px-4 focus:outline-none focus:border-customBlue"
+        className="border w-full border-gray-400 text-customGray1 bg-transparent rounded-lg py-3 px-4 focus:outline-none focus:border-customBlue"
       />
     </div>
   );
