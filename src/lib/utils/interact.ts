@@ -49,7 +49,47 @@ export const getMyCampaigns = async (
   } catch (e) {
     console.log(e);
   }
-};
+}
+
+export const getCampaigns = async (
+  provider: ethers.Signer | ethers.providers.Provider | undefined
+) => {
+  try {
+    const contract = await contractInstance(provider);
+
+    let campaignsLength = await contract.getCampaignsLength();
+    
+    if (!campaignsLength) return []
+
+    campaignsLength = Number(campaignsLength)
+
+    let campaigns = [];
+
+    for (let i = 0; i < campaignsLength; i++) {
+      const data = await contract.getCampaignDetails(i);
+
+      console.log(data);
+
+      const campaign = {
+        id: i,
+        title: data[0],
+        description: data[1],
+        owner: data[2],
+        goal: Number(data[3]),
+        endTime: Number(data[4]),
+        totalFunds: Number(data[5]),
+        category: data[6],
+        isOpen: data[7],
+      };
+      campaigns.push(campaign);
+    }
+
+    return campaigns;
+  } catch (e) {
+    console.log(e);
+  }
+}
+
 
 export const createCampaign = async (
   provider: ethers.Signer | ethers.providers.Provider | undefined
@@ -58,7 +98,7 @@ export const createCampaign = async (
  
   const contract = await contractInstance(provider)
   const tx = await contract.createCampaign(
-    'hello',
+    'hello2',
     'desc',
     2000,
     88990007655,

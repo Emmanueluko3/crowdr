@@ -5,77 +5,9 @@ import Header from "@/components/molecules/header/header";
 import SolarPanel from "@/../public/images/auth-bg.png";
 import React, { useEffect, useState } from "react";
 import { useMagicContext } from "@/components/magic/MagicProvider";
-import { getAllCategories, getMyCampaigns } from "@/lib/utils";
+import { IDToCategory, getAllCategories, getCampaigns, getMyCampaigns } from "@/lib/utils";
 import { ethers } from "ethers";
 
-const categoriesData = [
-  {
-    image: SolarPanel,
-    category: "Renewable Energy",
-    daysLeft: 12,
-    title: "Empowering Communities: Solar-Powered Microgrid Initiative",
-    subtitle:
-      "A Solar-Powered Community Microgrid is a self-sustaining energy system that combines solar energy generation with energy storage solutions and smart grid technologies. This microgrid can provide clean, renewable energy to an entire community, especially in areas where access to reliable electricity is limited. The project aims to reduce carbon emissions, promote sustainable energy practices, and improve the quality of life for community members.",
-    creatorPicture: SolarPanel,
-    creator: "Divine Samuel",
-    raised: 5200,
-    supporters: 20,
-    goal: 10000,
-  },
-  {
-    image: SolarPanel,
-    category: "Food and Agriculture",
-    daysLeft: 20,
-    title:
-      "Growing Futures: Sustainable Farming and Agricultural Training Center",
-    subtitle:
-      "The Sustainable Farming and Agricultural Training Center is a comprehensive initiative aimed at promoting sustainable agricultural practices, improving food security, and empowering local farmers and communities. The center serves as an educational hub and a practical training ground for farmers, teaching them modern and eco-friendly farming techniques while emphasizing environmental conservation and community development.",
-    creatorPicture: SolarPanel,
-    creator: "ADAX COOP",
-    raised: 2000,
-    supporters: 20,
-    goal: 10000,
-  },
-  {
-    image: SolarPanel,
-    category: "Renewable Energy",
-    daysLeft: 12,
-    title: "Healing Paws: Animal Rescue and Rehabilitation Center",
-    subtitle:
-      "The Animal Rescue and Rehabilitation Center provides a safe haven for abused, neglected, and injured animals. The center offers medical care, rehabilitation, and behavioral support to help animals recover physically and emotionally. It also focuses on education and advocacy, promoting responsible pet ownership and raising awareness about animal welfare issues.",
-    creatorPicture: SolarPanel,
-    creator: "Lucia Stephen",
-    raised: 9000,
-    supporters: 20,
-    goal: 10000,
-  },
-  {
-    image: SolarPanel,
-    category: "Renewable Energy",
-    daysLeft: 12,
-    title: "Healing Paws: Animal Rescue and Rehabilitation Center",
-    subtitle:
-      "The Animal Rescue and Rehabilitation Center provides a safe haven for abused, neglected, and injured animals. The center offers medical care, rehabilitation, and behavioral support to help animals recover physically and emotionally. It also focuses on education and advocacy, promoting responsible pet ownership and raising awareness about animal welfare issues.",
-    creatorPicture: SolarPanel,
-    creator: "Lucia Stephen",
-    raised: 9000,
-    supporters: 20,
-    goal: 10000,
-  },
-  {
-    image: SolarPanel,
-    category: "Renewable Energy",
-    daysLeft: 12,
-    title: "Healing Paws: Animal Rescue and Rehabilitation Center",
-    subtitle:
-      "The Animal Rescue and Rehabilitation Center provides a safe haven for abused, neglected, and injured animals. The center offers medical care, rehabilitation, and behavioral support to help animals recover physically and emotionally. It also focuses on education and advocacy, promoting responsible pet ownership and raising awareness about animal welfare issues.",
-    creatorPicture: SolarPanel,
-    creator: "Lucia Stephen",
-    raised: 9000,
-    supporters: 20,
-    goal: 10000,
-  },
-];
 
 const searchIcon = (
   <svg
@@ -95,17 +27,6 @@ const searchIcon = (
   </svg>
 );
 export default function Dashboard() {
-  // const categories = [
-  //   "All Campaigns",
-  //   "Creative Projects",
-  //   "Technology and Innovation",
-  //   "Food and Agriculture",
-  //   "Product Development",
-  //   "Social Causes",
-  //   "Event Funding",
-  //   "Renewable Energy",
-  //   "Animal Welfare",
-  // ];
 
   const { magic } = useMagicContext()
 
@@ -116,7 +37,7 @@ export default function Dashboard() {
   const getCreatorCampaignsHandler = async () => {
    const provider = await magic?.wallet.getProvider();
     const web3Provider = new ethers.providers.Web3Provider(provider);
-    const res = await getMyCampaigns(web3Provider, account)
+    const res = await getCampaigns(web3Provider)
     setCampaigns(res)
   }
 
@@ -152,10 +73,10 @@ export default function Dashboard() {
               <Card
                 key={index}
                 image={SolarPanel}
-                category={"Renewable"}
+                category={IDToCategory(item.category)}
                 daysLeft={4}
                 title={item.title}
-                subtitle={"Great Project that has the pontentail to disrupt"}
+                subtitle={item.description}
                 creatorPicture={SolarPanel}
                 creator={"Divine Samuel"}
                 raised={item.totalFunds}
@@ -191,20 +112,20 @@ export default function Dashboard() {
           ))}
         </div>
         <div className="my-10 grid grid-flow-row grid-cols-3 gap-6">
-          {categoriesData.map((item, index) => (
+          {campaigns.map((item, index) => (
             <Card
               key={index}
-              image={item.image}
-              category={item.category}
-              daysLeft={item.daysLeft}
+              image={SolarPanel}
+              category={IDToCategory(item.category)}
+              daysLeft={4}
               title={item.title}
-              subtitle={item.subtitle}
-              creatorPicture={item.creatorPicture}
+              subtitle={item.description}
+              creatorPicture={SolarPanel}
               creator={"Divine Samuel"}
-              raised={item.raised}
+              raised={item.totalFunds}
               supporters={item.supporters}
               goal={item.goal}
-            />
+              />
           ))}
         </div>
       </div>
