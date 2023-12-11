@@ -41,6 +41,7 @@ export const getMyCampaigns = async (
         totalFunds: Number(data[5]),
         category: data[6],
         isOpen: data[7],
+        image: data[8]
       };
       campaigns.push(campaign);
     }
