@@ -1,7 +1,7 @@
 import type { Metadata } from "next";
 import { Inter } from "next/font/google";
 import "./globals.css";
-import MagicProvider from '@/components/magic/MagicProvider'
+import MagicProvider from "@/components/magic/MagicProvider";
 
 const inter = Inter({ subsets: ["latin"] });
 
@@ -18,9 +18,8 @@ export default function RootLayout({
   return (
     <html lang="en">
       <body className={inter.className}>
-        <MagicProvider>
-          {children}
-        </MagicProvider>
+        <div id="modal"></div>
+        <MagicProvider>{children}</MagicProvider>
       </body>
     </html>
   );

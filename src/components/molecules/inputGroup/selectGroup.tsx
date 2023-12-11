@@ -2,7 +2,7 @@ import React, { SelectHTMLAttributes } from "react";
 
 interface SelectGroupProps extends SelectHTMLAttributes<HTMLSelectElement> {
   label: string;
-  options: { value: string; label: string }[];
+  options: { value: string | number; label: string }[];
   placeholder: string;
 }
 
@@ -14,8 +14,8 @@ const SelectGroup: React.FC<SelectGroupProps> = ({
 }) => {
   return (
     <div>
-      <p className="text-base text-gray-950 mb-1">{label}</p>
-      <div className="border w-full border-gray-300 text-customGray1 bg-[#F9F9FB] rounded-lg px-3 py-[5px]  focus:border-customBlue">
+      <p className="text-base text-white mb-1">{label}</p>
+      <div className="border w-full border-gray-300 text-customGray1  bg-gradient-to-b from-[#17191F] to-[#0F1115] rounded-lg px-3 py-[5px]  focus:border-customBlue">
         <select
           {...rest}
           className="w-full focus:border-none focus:outline-none bg-transparent"

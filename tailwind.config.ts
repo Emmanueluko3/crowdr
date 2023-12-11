@@ -18,6 +18,10 @@ const config: Config = {
         customBlack: "#050506",
         customBlue: "#03DEE2",
       },
+      colors: {
+        customBlue: "#03DEE2",
+        customGray: "#8B8C8F",
+      },
     },
   },
   plugins: [],

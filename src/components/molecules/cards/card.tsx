@@ -5,7 +5,7 @@ import ProgressBar from "@/components/atoms/progressBar";
 
 interface CardProps {
   image: any;
-  category: string;
+  category: string | undefined;
   daysLeft: string | number;
   title: string;
   subtitle: string;
@@ -75,7 +75,7 @@ const Card: React.FC<CardProps> = ({
             Raised <span className=" text-white">${raised}</span>
           </h3>
           <h3 className=" text-gray-400 text-xs">
-            Supporters <span className=" text-white">{'20'}</span>
+            Supporters <span className=" text-white">{"20"}</span>
             {/* Supporters <span className=" text-white">{supporters}</span> */}
           </h3>
           <h3 className=" text-gray-400 text-xs">

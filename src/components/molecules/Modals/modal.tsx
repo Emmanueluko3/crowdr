@@ -13,7 +13,7 @@ const Modal: React.FC<ModalProps> = ({ children, onClose }) => {
         onClick={onClose}
         className="absolute inset-0 z-[80] bg-black bg-opacity-50 flex items-center justify-center text-white"
       ></div>
-      <div className="w-[95%] lg:w-auto lg:h-auto bg-white p-1 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[100] rounded-lg">
+      <div className="w-[95%] lg:w-auto lg:h-auto p-1 fixed top-1/2 left-1/2 transform -translate-x-1/2 -translate-y-1/2 z-[100] rounded-lg">
         {children}
       </div>
     </div>,
