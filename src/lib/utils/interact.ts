@@ -3,7 +3,7 @@ import Crowdr from "../../../Crowdr.json";
 
 const contractABI = Crowdr.abi;
 
-const contractAddress = '0xCD160c00Ae03c536736F769a87cccf1A0a82c55B'
+const contractAddress = '0x153C0eA36b6B13ECf84EFab33b6b320FA15724B6'
 
 export const contractInstance = (
   provider: ethers.Signer | ethers.providers.Provider | undefined
