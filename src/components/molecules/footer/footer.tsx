@@ -31,7 +31,7 @@ export default function Footer() {
           Crowdr
         </Link>
         <p className="text-gray-500">
-          Copyright @ {currentYear} StrategyConnect Inc. All Rights Reserved.
+          Copyright @ {currentYear} Crowdr. All Rights Reserved.
         </p>
       </div>
     </div>
