@@ -171,7 +171,7 @@ export default function Contributions() {
               campaigns.map((item: any, index: number) => (
                 <Card
                   key={index}
-                  image={SolarPanel}
+                  image={item.image}
                   category={IDToCategory(item.category)}
                   daysLeft={4}
                   title={item.title}
