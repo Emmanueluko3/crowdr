@@ -1,10 +1,8 @@
 "use client";
 import Button from "@/components/atoms/button";
-import Image from "next/image";
 import Link from "next/link";
 import { usePathname } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
-import ProfilePics from "@/../public/images/profilePics.png";
 import { useMagicContext } from "@/components/magic/MagicProvider";
 import { createCampaign, toTimestamp, truncate } from "@/lib/utils";
 import { ethers } from "ethers";
@@ -31,7 +29,7 @@ export default function Header() {
   const pathname = usePathname().split("/")[1];
   const navLinks = [
     { label: "Dashboard", href: "/" },
-    { label: "My Contributions", href: "/contributions" },
+    { label: "My Campaigns", href: "/campaign" },
   ];
 
   const { magic } = useMagicContext();
