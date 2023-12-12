@@ -217,6 +217,7 @@ contract Crowdr is AutomationCompatibleInterface {
                 upkeepNeeded = true
             }
         }
+        return upkeepNeeded;
         // We don't use the checkData in this example. The checkData is defined when the Upkeep was registered.
     }
 
