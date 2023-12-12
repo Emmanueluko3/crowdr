@@ -3,7 +3,7 @@ import Crowdr from "../../../Crowdr.json";
 
 const contractABI = Crowdr.abi;
 
-const contractAddress = '0x153C0eA36b6B13ECf84EFab33b6b320FA15724B6'
+const contractAddress = '0xd3a412f981Dd2Cd873601DB0a78E7d174185b474'
 
 export const contractInstance = (
   provider: ethers.Signer | ethers.providers.Provider | undefined
@@ -81,6 +81,7 @@ export const getCampaigns = async (
         totalFunds: Number(data[5]),
         category: data[6],
         isOpen: data[7],
+        image: data[8]
       };
       campaigns.push(campaign);
     }
@@ -93,18 +94,24 @@ export const getCampaigns = async (
 
 
 export const createCampaign = async (
-  provider: ethers.Signer | ethers.providers.Provider | undefined
+  provider: ethers.Signer | ethers.providers.Provider | undefined,
+  title: string,
+  description: string,
+  goal: number,
+  duration: number,
+  category: number,
+  image: string
  
   ) => {
- 
+ debugger
   const contract = await contractInstance(provider)
   const tx = await contract.createCampaign(
-    'hello2',
-    'desc',
-    2000,
-    88990007655,
-    1,
-    1
+    title,
+    description,
+    goal,
+    duration,
+    category,
+    image
   );
 };
 

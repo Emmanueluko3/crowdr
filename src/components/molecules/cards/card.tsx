@@ -4,12 +4,12 @@ import * as React from "react";
 import ProgressBar from "@/components/atoms/progressBar";
 
 interface CardProps {
-  image: any;
+  image: string;
   category: string | undefined;
   daysLeft: string | number;
   title: string;
   subtitle: string;
-  creatorPicture: any;
+  creatorPicture: string;
   creator: string;
   raised: number;
   supporters: number;

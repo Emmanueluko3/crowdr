@@ -6,7 +6,7 @@ import { usePathname } from "next/navigation";
 import React, { useCallback, useEffect, useState } from "react";
 import ProfilePics from "@/../public/images/profilePics.png";
 import { useMagicContext } from "@/components/magic/MagicProvider";
-import { createCampaign, truncate } from "@/lib/utils";
+import { createCampaign, toTimestamp, truncate } from "@/lib/utils";
 import { ethers } from "ethers";
 import SelectGroup from "../inputGroup/selectGroup";
 import InputGroup from "../inputGroup/inputGroup";
@@ -36,13 +36,17 @@ export default function Header() {
 
   const { magic } = useMagicContext();
 
-  const [disabled, setDisabled] = useState<boolean>(false);
-  const [account, setAccount] = useState<any>("");
-  const [logoutBtn, setLogoutBtn] = useState(false);
+  const [account, setAccount] = useState<string>("");
+  const [logoutBtn, setLogoutBtn] = useState<boolean>(false)
+  const [title, setTitle] = useState<string>("");
+  const [description, setDescription] = useState<string>("");
+  const [goal, setGoal] = useState<number>();
+  const [duration, setDuration] = useState<number>();
+  const [category, setCategory] = useState<number>(0);
+  const [image, setImage] = useState<string>('');
 
   const [createCampaignModal, setCreateCampaignModal] = useState(false);
-  // Create Form Data
-  const [category, setCategory] = useState<any>(null);
+
 
   const connect = useCallback(async () => {
     if (!magic) return;
@@ -56,15 +60,33 @@ export default function Header() {
     }
   }, [magic, setAccount]);
 
-  const create = async () => {
+  const createCampaignHandler = async () => {
     const provider = await magic?.wallet.getProvider();
     const web3Provider = new ethers.providers.Web3Provider(provider);
+
     if (account) {
-      // await createCampaign(web3Provider.getSigner());
-      setCreateCampaignModal(true);
+      await createCampaign(
+        web3Provider.getSigner(),
+        title,
+        description,
+        goal,
+        duration,
+        category,
+        image
+      );
+
     } else {
+
       await connect();
-      account && (await createCampaign(web3Provider.getSigner()));
+      await createCampaign(
+        web3Provider.getSigner(),
+        title,
+        description,
+        goal,
+        duration,
+        category,
+        image
+      );
     }
   };
 
@@ -91,6 +113,7 @@ export default function Header() {
               <h3 className="text-xl font-bold mb-4">Introduction</h3>
               <div className="mb-4">
                 <InputGroup
+                  onChange={e => setTitle(e.target.value)}
                   label="Campaign Title"
                   placeholder="Enter campaign title"
                 />
@@ -98,7 +121,7 @@ export default function Header() {
               <div className="mb-4">
                 <SelectGroup
                   label="Category"
-                  onChange={(e) => setCategory(e.target.value)}
+                  onChange={e => setCategory(Number(e.target.value))}
                   value={category}
                   placeholder="Select Campaign Category"
                   options={[
@@ -115,6 +138,7 @@ export default function Header() {
               </div>
               <div className="mb-4">
                 <InputGroup
+                  onChange={e => setDescription(e.target.value)}
                   label="Project Overview"
                   placeholder="Write something"
                 />
@@ -126,12 +150,32 @@ export default function Header() {
 
               <div className="mb-4">
                 <InputGroup
-                  label="Personal Connection"
+                  onChange={e => setGoal(Number(e.target.value))}
+                  label="Goal"
                   placeholder="Write something"
                 />
               </div>
 
-              <Button className="text-gray-950">Continue</Button>
+              <div className="mb-4">
+                <InputGroup
+                  onChange={e => setImage(e.target.value)}
+                  label="Image path"
+                  placeholder="Write something"
+                />
+              </div>
+
+              <div className="mb-4">
+                 <input
+                  className="w-full px-3 py-2 border rounded-lg text-gray-700 focus:outline-none focus:border-blue-500"
+                  type="datetime-local"
+                  id="start"
+                  onChange={e => setDuration(toTimestamp(e.target.value))}
+                  placeholder="Start Time"
+                  required
+                   />
+              </div>
+
+              <Button onClick={createCampaignHandler} className="text-gray-950">Continue</Button>
             </div>
           </div>
         </Modal>
@@ -159,7 +203,7 @@ export default function Header() {
 
       <div className="flex gap-3">
         <Button
-          onClick={create}
+          onClick={() => setCreateCampaignModal(true)}
           className="text-black flex text-base whitespace-nowrap"
         >
           <span className="mr-3">{plusIcon}</span> Create Campaign
