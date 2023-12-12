@@ -41,9 +41,6 @@ The story of Crowdr is an ongoing narrative. Looking ahead, we envision continuo
 
 Crowdr is not just a platform; it's a commitment to transforming crowdfunding through blockchain innovation. Join us as we continue empowering creators, fostering transparency, and reshaping the future of crowdfunding on a global scale.
 
-BUILT WITH:
-Nestjs, Solidity, Magic, Chainlink Automation, Avalanche.
-
 ## Getting Started
 
 First, run the development server:
